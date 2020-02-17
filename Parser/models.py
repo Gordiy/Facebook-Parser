@@ -1,10 +1,12 @@
 from django.db import models
 
+
 class Group(models.Model):
     link = models.TextField()
 
     def __str__(self):
         return 'Group link: {0}'.format(self.link)
+
 
 class Follower(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE)

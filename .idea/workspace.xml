@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="189f47fc-4eeb-4be6-b54e-9b864b289aa7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Parser/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Parser/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FacebookParser/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/FacebookParser/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FacebookParser/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/FacebookParser/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Parser/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Parser/FB.py" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/FB.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Parser/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Parser/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
