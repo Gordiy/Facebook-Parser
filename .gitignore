@@ -3,5 +3,5 @@ tasks
 db.sqlite3
 tests.py
 
-Parser/chromedriver
+Parser/chromedriver.*
 Parser/migrations/

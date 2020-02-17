@@ -2,14 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="189f47fc-4eeb-4be6-b54e-9b864b289aa7" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Parser/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/FacebookParser.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/FacebookParser.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FacebookParser/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/FacebookParser/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Parser/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Parser/migrations/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Parser/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FacebookParser/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/FacebookParser/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Parser/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Parser/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,6 +20,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="HTML File" />
         <option value="Python Script" />
       </list>
     </option>
@@ -35,6 +36,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/manage.py" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
