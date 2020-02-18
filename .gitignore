@@ -1,7 +1,9 @@
 venv/
 tasks
 db.sqlite3
+
 tests.py
+utils_test.py
 
 Parser/chromedriver.*
 Parser/migrations/

@@ -6,6 +6,9 @@ def get_id_from_url(url):
 
     if len(user_id) != 0:
         user_id = user_id[0].split("=")[1]
+    elif len(user_id) == 0:
+        u_id = url.split('?')[0].split('/')
+        user_id = u_id[len(u_id)-1]
     else:
         user_id = None
 

@@ -7,7 +7,6 @@ class Group(models.Model):
     def __str__(self):
         return 'Group link: {0}'.format(self.link)
 
-
 class Follower(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     fb_id = models.CharField(max_length=25)
