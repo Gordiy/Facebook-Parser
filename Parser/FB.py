@@ -9,18 +9,18 @@ class FacebookParser:
         chrome_options = webdriver.ChromeOptions()
         prefs = {"profile.default_content_setting_values.notifications": 2}
         chrome_options.add_experimental_option("prefs", prefs)
-
+        self.fb_base_url = 'https://www.facebook.com/'
         self.__driver = webdriver.Chrome(executable_path=path_to_chrome_webdriver, options=chrome_options)
 
-    def login(self, fb_base_url):
-        self.__driver.get(fb_base_url)
+    def login(self, login, password):
+        self.__driver.get(self.fb_base_url)
 
         email = self.__driver.find_element_by_id('email')
         pswd = self.__driver.find_element_by_id('pass')
         login_btn = self.__driver.find_element_by_id('loginbutton')
 
-        email.send_keys('gordiy.yuriy.gord123@gmail.com')
-        pswd.send_keys('46256As61F2')
+        email.send_keys(login)
+        pswd.send_keys(password)
         login_btn.click()
 
         current_url = self.__driver.current_url.split('?')[0]
@@ -45,7 +45,9 @@ class FacebookParser:
     def groups_members_id(self, group_url):
         members = []
 
-        self.__driver.get(group_url+'/members')
+        group_url += '/members'
+        print(group_url)
+        self.__driver.get(group_url)
 
         SCROLL_PAUSE_TIME = 0.6
 
@@ -68,4 +70,16 @@ class FacebookParser:
         remove_duplicate(members)
         return members
 
+    def connect_to_group(self, group_url):
+        info = {}
 
+        self.__driver.get(group_url)
+        div_connect = self.__driver.find_element_by_class_name('_21kr')
+        try:
+            div_connect[0].text
+            info['status'] = 'connected'
+        except Exception as e:
+            print(e)
+            info['status'] = 'connected before'
+
+        return info
