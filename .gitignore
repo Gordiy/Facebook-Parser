@@ -1,9 +1,10 @@
 venv/
-tasks
+tasks.txt
 db.sqlite3
 
 tests.py
 utils_test.py
+Parser/login_config.py
 
 Parser/chromedriver.*
 Parser/migrations/

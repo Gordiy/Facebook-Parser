@@ -17,5 +17,8 @@ def get_id_from_url(url):
 
 def remove_duplicate(list_):
     for i in range(len(list_)):
-        if list_[i] == list_[i + 1]:
-            list_.remove(list_[i])
+        try:
+            if list_[i] == list_[i + 1]:
+                list_.remove(list_[i])
+        except:
+            pass

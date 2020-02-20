@@ -1,4 +1,5 @@
 import time
+import random
 from .utils import get_id_from_url, remove_duplicate
 from selenium import webdriver
 
@@ -38,7 +39,7 @@ class FacebookParser:
             link = user_link.find_element_by_tag_name('a').get_attribute('href')
             user_id = get_id_from_url(link)
             if user_id is not None and user_id not in links:
-                links.append(link)
+                links.append(user_id)
 
         return links
 
@@ -49,8 +50,6 @@ class FacebookParser:
         print(group_url)
         self.__driver.get(group_url)
 
-        SCROLL_PAUSE_TIME = 0.6
-
         # Get scroll height
         last_height = self.__driver.execute_script("return document.body.scrollHeight")
         time.sleep(2)
@@ -60,7 +59,8 @@ class FacebookParser:
             self.__driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             members += self.__get_ids()
             # Wait to load page
-            time.sleep(SCROLL_PAUSE_TIME)
+            sleep_scroll = random.randint(1, 3)
+            time.sleep(sleep_scroll)
             # Calculate new scroll height and compare with last scroll height
             new_height = self.__driver.execute_script("return document.body.scrollHeight")
             if new_height == last_height:
@@ -76,7 +76,7 @@ class FacebookParser:
         self.__driver.get(group_url)
         div_connect = self.__driver.find_element_by_class_name('_21kr')
         try:
-            div_connect[0].text
+            div_connect.find_element_by_tag_name('span').click()
             info['status'] = 'connected'
         except Exception as e:
             print(e)
