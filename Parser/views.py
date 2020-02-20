@@ -1,14 +1,17 @@
 import os
 from .FB import FacebookParser
-from django.shortcuts import render
-
+from django.http import JsonResponse
+from threading import Thread
 from .login_config import login, pswd
 from .save import save_members
 
 
-def index(request):
+def index(request, group_url):
+    group_url = group_url.replace('_', '/')
+
     path = os.getcwd() + '/Parser/chromedriver.exe'
     parser = FacebookParser(path)
 
-    save_members(parser, 'https://www.facebook.com/groups/518856198557408', login, pswd)
-    return render(request, 'index.html')
+    th = Thread(target=save_members, args=[parser, group_url, login, pswd])
+    th.start()
+    return JsonResponse({'process': 'started'})

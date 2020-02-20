@@ -1,8 +1,8 @@
 import os
 from .models import Group, Follower
-from .FB import FacebookParser
 
 path = os.getcwd() + '/Parser/chromedriver.exe'
+
 
 def save_members(parser, group_url, login, pswd):
     parser.login(login, pswd)
