@@ -6,15 +6,16 @@ from selenium import webdriver
 
 class FacebookParser:
     def __init__(self, path_to_chrome_webdriver):
-        print(path_to_chrome_webdriver)
         chrome_options = webdriver.ChromeOptions()
         prefs = {"profile.default_content_setting_values.notifications": 2}
         chrome_options.add_experimental_option("prefs", prefs)
-        self.fb_base_url = 'https://www.facebook.com/'
+
+        self.__fb_base_url = 'https://www.facebook.com/'
+        self.__messenger_base_url = 'https://www.messenger.com/t/'
         self.__driver = webdriver.Chrome(executable_path=path_to_chrome_webdriver, options=chrome_options)
 
     def login(self, login, password):
-        self.__driver.get(self.fb_base_url)
+        self.__driver.get(self.__fb_base_url)
 
         email = self.__driver.find_element_by_id('email')
         pswd = self.__driver.find_element_by_id('pass')
@@ -84,3 +85,9 @@ class FacebookParser:
 
         return info
 
+    def send_message(self, user_id, text):
+        self.__driver.get(self.__messenger_base_url + str(user_id))
+
+        div_input = self.__driver.find_element_by_class_name('_1mf _1mj')
+        div_input.find_element_by_tag_name('span').send_keys(text)
+        print("Hello")
