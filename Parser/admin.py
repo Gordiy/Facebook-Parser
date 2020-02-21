@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import Follower, Group, FacebookCredentials
 
-# Register your models here.
+
+admin.site.register(Group)
+admin.site.register(Follower)
+admin.site.register(FacebookCredentials)
