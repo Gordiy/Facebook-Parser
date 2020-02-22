@@ -1,13 +1,14 @@
 import time
 import telebot
 import requests
-from Parser.login_config import telegram_token, login, pswd
 
 
-bot = telebot.TeleBot(telegram_token)
+token = '932417576:AAEH-AvLaWS9O0IOJ7hajkmgrrwRxqIwG8E'
+bot = telebot.TeleBot(token)
 
 user_id = None
 group_url = None
+
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
@@ -40,13 +41,28 @@ def start_parsing(message):
     group_url = message.text
 
     group_url = group_url.replace('/', '_')
+
     resp = requests.get('http://127.0.0.1:8000/index/' + group_url)
     print(resp.text)
     if resp.status_code == 200:
 
-        bot.send_message(message.from_user.id, "Парсинг запущен")
+        msg = bot.send_message(message.from_user.id, "Парсинг запущен. Введите сообщение для рассылки.")
+        bot.register_next_step_handler(msg, send_message)
     else:
         bot.send_message(message.from_user.id, "Парсинг не запущен")
+        user_murkup = telebot.types.ReplyKeyboardMarkup(True)
+        user_murkup.row('/start')
+
+        msg = bot.send_message(message.from_user.id, "Начните с начала.", reply_markup=user_murkup)
+        bot.register_next_step_handler(msg, send_welcome)
+
+
+@bot.message_handler(content_types=['text'])
+def send_message(message):
+    msg = message.text.replace(' ', '+')
+
+    resp = requests.get('http://127.0.0.1:8000/send_msg/'+msg)
+    print(resp.text)
 
 
 bot.skip_pending = True
@@ -56,12 +72,6 @@ while True:
     try:
 
         bot.polling(none_stop=True)
-
-    # ConnectionError and ReadTimeout because of possible timout of the requests library
-
-    # TypeError for moviepy errors
-
-    # maybe there are others, therefore Exception
 
     except Exception as e:
 

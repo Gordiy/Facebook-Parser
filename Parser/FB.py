@@ -11,7 +11,7 @@ class FacebookParser:
         chrome_options.add_experimental_option("prefs", prefs)
 
         self.__fb_base_url = 'https://www.facebook.com/'
-        self.__messenger_base_url = 'https://www.messenger.com/t/'
+        self.__messenger_base_url = 'https://www.messenger.com/'
         self.__driver = webdriver.Chrome(executable_path=path_to_chrome_webdriver, options=chrome_options)
 
     def login(self, login, password):
@@ -47,7 +47,11 @@ class FacebookParser:
     def groups_members_id(self, group_url):
         members = []
 
-        group_url += '/members'
+        if group_url[len(group_url)-1] == '/':
+            group_url += 'members'
+        else:
+            group_url += '/members'
+
         print(group_url)
         self.__driver.get(group_url)
 
@@ -85,9 +89,27 @@ class FacebookParser:
 
         return info
 
-    def send_message(self, user_id, text):
-        self.__driver.get(self.__messenger_base_url + str(user_id))
+    def messenger_login(self, login, password):
+        self.__driver.get(self.__messenger_base_url+'/login')
 
-        div_input = self.__driver.find_element_by_class_name('_1mf _1mj')
+        email = self.__driver.find_element_by_id('email')
+        pswd = self.__driver.find_element_by_id('pass')
+        login_btn = self.__driver.find_element_by_id('loginbutton')
+
+        email.send_keys(login)
+        pswd.send_keys(password)
+        login_btn.click()
+
+        if self.__driver.current_url != 'https://www.messenger.com/login/password/':
+            return {'status': 'ok'}
+        else:
+            print("Can not login!")
+
+    def send_message(self, user_id, text):
+        self.__driver.get('{0}{1}{2}'.format(self.__messenger_base_url, 't/', user_id))
+
+        div_input = self.__driver.find_element_by_class_name('_1mf._1mj')
         div_input.find_element_by_tag_name('span').send_keys(text)
-        print("Hello")
+
+        path = self.__driver.find_element_by_class_name('_30yy._38lh._7kpi')
+        path.click()

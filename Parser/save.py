@@ -1,8 +1,11 @@
 import os
 import random
+import time
+import threading
 from .models import Group, Follower, FacebookCredentials
 
 path = os.getcwd() + '/Parser/chromedriver.exe'
+result_available = threading.Event()
 
 
 def get_credentials():
@@ -30,6 +33,8 @@ def save_members(parser, group_url, login, pswd):
         parser.cconnect_to_group(group_url)
         return {'status': 'Subscribe on group. Try later.'}
 
+    result_available.set()
+
     group, created = Group.objects.get_or_create(link=group_url)
 
     for member_id in group_members_ids:
@@ -38,4 +43,21 @@ def save_members(parser, group_url, login, pswd):
             fb_id=member_id
         )
         print(follower)
+
+
+    time.sleep(3)
+
     return {'members': group_members_ids}
+
+
+def send_msg(parser, login, password, text):
+    result_available.wait()
+
+    followers = Follower.objects.all()
+
+    if parser.messenger_login(login, password):
+
+        for follower in followers:
+            sleep_time = random.randint(3, 6)
+            parser.send_message(follower.fb_id, text)
+            time.sleep(sleep_time)
