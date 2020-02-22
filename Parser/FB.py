@@ -113,3 +113,10 @@ class FacebookParser:
 
         path = self.__driver.find_element_by_class_name('_30yy._38lh._7kpi')
         path.click()
+
+    def parse_chat(self, user_id):
+        self.__driver.get(self.__messenger_base_url+'t/'+user_id)
+
+        elem = self.__driver.find_elements_by_class_name('_41ud')
+        print(elem)
+
