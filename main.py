@@ -1,4 +1,5 @@
 import time
+import random
 import telebot
 import requests
 
@@ -62,7 +63,45 @@ def send_message(message):
     msg = message.text.replace(' ', '+')
 
     resp = requests.get('http://127.0.0.1:8000/send_msg/'+msg)
-    print(resp.text)
+    if resp.status_code == 200:
+
+        msg = bot.send_message(message.from_user.id, "Рассылка запущено. Ожидайте уведомления о сообщениях.")
+        bot.register_next_step_handler(msg, read_count_message)
+    else:
+        bot.send_message(message.from_user.id, "Рассылка не запущена.")
+        user_murkup = telebot.types.ReplyKeyboardMarkup(True)
+        user_murkup.row('/start')
+
+        msg = bot.send_message(message.from_user.id, "Начните с начала.", reply_markup=user_murkup)
+        bot.register_next_step_handler(msg, send_welcome)
+
+
+@bot.message_handler(content_types=['text'])
+def read_count_message(message):
+
+    while True:
+        resp = requests.get('http://127.0.0.1:8000/count_msg/')
+
+        if resp.status_code == 200:
+            response = resp.json()
+            print(response)
+
+            for data in response['count_messages']:
+
+                text_for_user = 'Количество сообщений {0}, Логин: {1}, Пароль {2}'.format(data['count_msg'], data['login'], data['password'])
+                bot.send_message(message.from_user.id, text_for_user)
+        else:
+            bot.send_message(message.from_user.id, "Возникли проблемы.")
+            user_murkup = telebot.types.ReplyKeyboardMarkup(True)
+            user_murkup.row('/start')
+
+            msg = bot.send_message(message.from_user.id, "Начните с начала.", reply_markup=user_murkup)
+            bot.register_next_step_handler(msg, send_welcome)
+
+            break
+
+    time.sleep(3600)
+
 
 
 bot.skip_pending = True
@@ -75,6 +114,4 @@ while True:
 
     except Exception as e:
 
-
-        time.sleep(15)
-
+        time.sleep(60)

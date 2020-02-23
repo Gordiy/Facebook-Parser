@@ -32,6 +32,15 @@ class FacebookParser:
         else:
             print("Can not login!")
 
+    def logout(self):
+        self.__driver.find_element_by_class_name('_54nh')
+
+        current_url = self.__driver.current_url.split("?")[0]
+        if current_url == 'https://www.facebook.com/':
+            return {'status': 'ok'}
+        else:
+            print("Can not logout!")
+
     def __get_ids(self):
         links = []
         div_users = self.__driver.find_elements_by_class_name('_60ri')
@@ -90,7 +99,7 @@ class FacebookParser:
         return info
 
     def messenger_login(self, login, password):
-        self.__driver.get(self.__messenger_base_url+'/login')
+        self.__driver.get(self.__messenger_base_url+'login')
 
         email = self.__driver.find_element_by_id('email')
         pswd = self.__driver.find_element_by_id('pass')
@@ -114,9 +123,9 @@ class FacebookParser:
         path = self.__driver.find_element_by_class_name('_30yy._38lh._7kpi')
         path.click()
 
-    def parse_chat(self, user_id):
-        self.__driver.get(self.__messenger_base_url+'t/'+user_id)
+    def count_messages(self):
+        # self.__driver.get(self.__fb_base_url)
+        span_count = self.__driver.find_elements_by_class_name('jewelCount')[1].find_element_by_tag_name('span').text
 
-        elem = self.__driver.find_elements_by_class_name('_41ud')
-        print(elem)
-
+        if span_count:
+            return span_count

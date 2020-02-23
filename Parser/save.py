@@ -61,3 +61,33 @@ def send_msg(parser, login, password, text):
             sleep_time = random.randint(3, 6)
             parser.send_message(follower.fb_id, text)
             time.sleep(sleep_time)
+
+
+def count_messages_all_accounts(parser):
+    credentials = FacebookCredentials.objects.all()
+
+    try:
+        parser.logout()
+    except:
+        pass
+
+    accounts = []
+
+    for creds in credentials:
+        info = {}
+
+        login = creds.login
+        password = creds.password
+
+        parser.login(login, password)
+        count = parser.count_msg()
+
+        if count:
+            info['login'] = login
+            info['password'] = password
+            info['count_msg'] = count
+
+        time.sleep(3)
+        parser.logout()
+
+    return accounts
