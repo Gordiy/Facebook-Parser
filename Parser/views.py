@@ -11,9 +11,10 @@ def index(request, group_url):
 
     login_creds = get_credentials()
     print('\n\n\n', login_creds, '\n\n\n')
+
+    global path
     path = os.getcwd() + '/Parser/chromedriver'
 
-    global parser
 
     if login_creds:
         parser = FacebookParser(path)
@@ -27,7 +28,6 @@ def index(request, group_url):
 
 def send_messages(request, msg):
     login_creds = get_credentials()
-    path = os.getcwd() + '/Parser/chromedriver'
 
     msg = msg.replace('+', ' ')
 
@@ -43,7 +43,8 @@ def send_messages(request, msg):
 
 
 def count_msg(request):
-    count_msg = count_messages_all_accounts(parser)
+
+    count_msg = count_messages_all_accounts()
 
     resp = {'count_messages': count_msg}
 

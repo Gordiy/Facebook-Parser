@@ -80,7 +80,7 @@ def send_message(message):
 def read_count_message(message):
 
     while True:
-        resp = requests.get('http://127.0.0.1:8000/count_msg/')
+        resp = requests.get('http://127.0.0.1:8000/count_msg')
 
         if resp.status_code == 200:
             response = resp.json()
@@ -100,7 +100,7 @@ def read_count_message(message):
 
             break
 
-    time.sleep(3600)
+        time.sleep(3600)
 
 
 

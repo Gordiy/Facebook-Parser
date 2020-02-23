@@ -3,6 +3,8 @@ import random
 import time
 import threading
 from .models import Group, Follower, FacebookCredentials
+from .FB import FacebookParser
+
 
 path = os.getcwd() + '/Parser/chromedriver.exe'
 result_available = threading.Event()
@@ -47,6 +49,8 @@ def save_members(parser, group_url, login, pswd):
 
     time.sleep(3)
 
+    parser.close()
+
     return {'members': group_members_ids}
 
 
@@ -62,25 +66,23 @@ def send_msg(parser, login, password, text):
             parser.send_message(follower.fb_id, text)
             time.sleep(sleep_time)
 
+    parser.close()
 
-def count_messages_all_accounts(parser):
+def count_messages_all_accounts():
     credentials = FacebookCredentials.objects.all()
-
-    try:
-        parser.logout()
-    except:
-        pass
 
     accounts = []
 
     for creds in credentials:
         info = {}
 
+        parser = FacebookParser(path)
+
         login = creds.login
         password = creds.password
 
         parser.login(login, password)
-        count = parser.count_msg()
+        count = parser.count_messages()
 
         if count:
             info['login'] = login
@@ -88,6 +90,6 @@ def count_messages_all_accounts(parser):
             info['count_msg'] = count
 
         time.sleep(3)
-        parser.logout()
+        parser.close()
 
     return accounts

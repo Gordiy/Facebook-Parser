@@ -32,15 +32,6 @@ class FacebookParser:
         else:
             print("Can not login!")
 
-    def logout(self):
-        self.__driver.find_element_by_class_name('_54nh')
-
-        current_url = self.__driver.current_url.split("?")[0]
-        if current_url == 'https://www.facebook.com/':
-            return {'status': 'ok'}
-        else:
-            print("Can not logout!")
-
     def __get_ids(self):
         links = []
         div_users = self.__driver.find_elements_by_class_name('_60ri')
@@ -125,7 +116,16 @@ class FacebookParser:
 
     def count_messages(self):
         # self.__driver.get(self.__fb_base_url)
-        span_count = self.__driver.find_elements_by_class_name('jewelCount')[1].find_element_by_tag_name('span').text
+        try:
+            span_count = self.__driver.find_elements_by_class_name('jewelCount')[1].find_element_by_tag_name('span').text
+            print(span_count)
+        except Exception as e:
+            print(e)
 
         if span_count:
             return span_count
+
+    def close(self):
+        sleep_time = random.randint(1, 5)
+        time.sleep(sleep_time)
+        self.__driver.close()
