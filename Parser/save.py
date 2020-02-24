@@ -6,7 +6,7 @@ from .models import Group, Follower, FacebookCredentials
 from .FB import FacebookParser
 
 
-path = os.getcwd() + '/Parser/chromedriver.exe'
+path = os.getcwd() + '/Parser/chromedriver'
 result_available = threading.Event()
 
 
@@ -61,10 +61,20 @@ def send_msg(parser, login, password, text):
 
     if parser.messenger_login(login, password):
 
+        counter = random.randint(20, 30)
+
+        timer_for_sleeping = random.randint(5000, 10000)
+
+        i = 0
         for follower in followers:
             sleep_time = random.randint(3, 6)
             parser.send_message(follower.fb_id, text)
             time.sleep(sleep_time)
+
+            if i == counter:
+                time.sleep(timer_for_sleeping)
+
+            i += 1
 
     parser.close()
 
@@ -88,6 +98,8 @@ def count_messages_all_accounts():
             info['login'] = login
             info['password'] = password
             info['count_msg'] = count
+
+            accounts.append(info)
 
         time.sleep(3)
         parser.close()

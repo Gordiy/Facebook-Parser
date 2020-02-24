@@ -108,19 +108,19 @@ class FacebookParser:
     def send_message(self, user_id, text):
         self.__driver.get('{0}{1}{2}'.format(self.__messenger_base_url, 't/', user_id))
 
-        div_input = self.__driver.find_element_by_class_name('_1mf._1mj')
-        div_input.find_element_by_tag_name('span').send_keys(text)
+        try:
+            div_input = self.__driver.find_element_by_class_name('_1mf._1mj')
+            div_input.find_element_by_tag_name('span').send_keys(text)
 
-        path = self.__driver.find_element_by_class_name('_30yy._38lh._7kpi')
-        path.click()
+            path = self.__driver.find_element_by_class_name('_30yy._38lh._7kpi')
+            path.click()
+        except Exception as e:
+            print(e)
 
     def count_messages(self):
         # self.__driver.get(self.__fb_base_url)
-        try:
-            span_count = self.__driver.find_elements_by_class_name('jewelCount')[1].find_element_by_tag_name('span').text
-            print(span_count)
-        except Exception as e:
-            print(e)
+        span_count = self.__driver.find_elements_by_class_name('jewelCount')[1].find_element_by_tag_name('span').text
+        print('\n\n\n SPAN COUNT: {} \n\n\n'.format(span_count))
 
         if span_count:
             return span_count
